@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>簡易購物網站</title>
+    <style>
+        body { font-family: 'Microsoft JhengHei', Arial, sans-serif; background: #f7f7f7; margin: 0; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px #ccc; }
+        h1 { text-align: center; color: #333; }
+        .products { display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; }
+        .product { background: #fafafa; border-radius: 8px; box-shadow: 0 1px 4px #ddd; padding: 20px; width: 220px; text-align: center; }
+        .product img { width: 150px; height: 150px; object-fit: cover; border-radius: 6px; }
+        .product h2 { font-size: 1.2em; margin: 10px 0 5px; }
+        .product p { color: #666; font-size: 0.95em; }
+        .product .price { color: #e67e22; font-weight: bold; margin: 8px 0; }
+        .product button { background: #27ae60; color: #fff; border: none; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-size: 1em; }
+        .product button:hover { background: #219150; }
+        .cart { margin-top: 40px; background: #f0f0f0; border-radius: 8px; padding: 20px; }
+        .cart h2 { margin-top: 0; }
+        .cart-list { list-style: none; padding: 0; }
+        .cart-list li { margin-bottom: 8px; }
+        .cart-total { font-weight: bold; color: #e67e22; }
+        footer { text-align: center; color: #aaa; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>簡易購物網站 Demo</h1>
+        <div class="products">
+            <div class="product">
+                <img src="https://i.imgur.com/1Q9Z1Zm.jpg" alt="T恤">
+                <h2>T恤</h2>
+                <p>純棉短袖T恤，舒適好穿。</p>
+                <div class="price">NT$350</div>
+                <button onclick="addToCart('T恤', 350)">加入購物車</button>
+            </div>
+            <div class="product">
+                <img src="https://i.imgur.com/2nCt3Sbl.jpg" alt="馬克杯">
+                <h2>馬克杯</h2>
+                <p>可愛馬克杯，溫暖你的早晨。</p>
+                <div class="price">NT$200</div>
+                <button onclick="addToCart('馬克杯', 200)">加入購物車</button>
+            </div>
+            <div class="product">
+                <img src="https://i.imgur.com/3g7nmJC.jpg" alt="筆記本">
+                <h2>筆記本</h2>
+                <p>精美筆記本，記錄每一天。</p>
+                <div class="price">NT$120</div>
+                <button onclick="addToCart('筆記本', 120)">加入購物車</button>
+            </div>
+        </div>
+
+        <div class="cart" id="cart">
+            <h2>🛒 購物車</h2>
+            <ul class="cart-list" id="cart-list"></ul>
+            <div class="cart-total" id="cart-total"></div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 簡易購物網站
+    </footer>
+    <script>
+        // 購物車資料
+        let cart = [];
+
+        // 加入購物車函數
+        function addToCart(name, price) {
+            cart.push({name, price});
+            updateCart();
+        }
+
+        // 更新購物車顯示
+        function updateCart() {
+            const cartList = document.getElementById('cart-list');
+            const cartTotal = document.getElementById('cart-total');
+            cartList.innerHTML = '';
+            let total = 0;
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li>購物車是空的。</li>';
+                cartTotal.textContent = '';
+                return;
+            }
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - NT$${item.price}`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+            cartTotal.textContent = `總金額：NT$${total}`;
+        }
+
+        // 頁面載入時初始化購物車
+        updateCart();
+    </script>
+</body>
+</html>
